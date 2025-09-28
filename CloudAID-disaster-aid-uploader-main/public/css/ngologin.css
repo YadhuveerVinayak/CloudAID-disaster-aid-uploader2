@@ -1,0 +1,145 @@
+/*  Stage 1: Global Layout */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1c1c2b, #3f4c6b);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*  Stage 2: Login Container */
+.login-box {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*  Stage 3: Title */
+.login-box h2 {
+  text-align: center;
+  color: #f2c94c;
+  margin-bottom: 20px;
+}
+
+/*  Stage 4: Form Layout */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/*  Stage 5: Input Fields */
+input {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+input:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px #f2c94c;
+}
+
+/*  Stage 6: Submit Button */
+button {
+  padding: 12px;
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #f2c94c, #f2994a);
+  transform: translateY(-1px);
+}
+
+/*  Stage 7: Forgot Password */
+.forgot-password {
+  text-align: right;
+  font-size: 0.85rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.forgot-password a {
+  color: #f2c94c;
+  text-decoration: none;
+}
+
+/*  Stage 8: Toggle Texts */
+.switch-login,
+.register-toggle {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.switch-login span,
+.register-toggle span {
+  color: #f2c94c;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/*  Stage 9: Registration Fields (Hidden/Shown Dynamically) */
+.register-fields {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.register-fields.show {
+  display: flex;
+}
+
+/*  Stage 10: Registration Success Message */
+.success-message {
+  display: none;
+  text-align: center;
+  color: lightgreen;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/*  Stage 11: Footer Note */
+.note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-top: 20px;
+}
+
+/* Stage 12: Responsive */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 25px;
+  }
+
+  .login-box h2 {
+    font-size: 1.5rem;
+  }
+}

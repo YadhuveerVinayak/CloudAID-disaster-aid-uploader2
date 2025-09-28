@@ -1,0 +1,181 @@
+/* === Base & Layout === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1c1c2b, #3f4c6b);
+  color: white;
+  min-height: 100vh;
+}
+
+/* === Header Section === */
+header {
+  text-align: center;
+  padding: 40px 20px 10px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* === Section Heading === */
+.section-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f2c94c;
+  font-size: 1.3rem;
+}
+
+/* === Button Styling === */
+.styled-btn {
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+  font-family: inherit;
+  transition: background 0.3s ease;
+}
+
+.styled-btn:hover {
+  background: linear-gradient(90deg, #f2c94c, #f2994a);
+}
+
+/* === Container Layout === */
+.main-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+}
+
+.dashboard-container {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  margin-top: 30px;
+}
+
+/* === Upload List === */
+#upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* === Upload Card === */
+.upload-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  gap: 20px;
+  color: white;
+  flex-wrap: wrap;
+}
+
+.upload-card img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* === Upload Details === */
+.upload-details {
+  flex: 1;
+  min-width: 200px;
+}
+
+.upload-details h3 {
+  color: #f2c94c;
+  margin-bottom: 6px;
+}
+
+.upload-details p {
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+.upload-details .timestamp {
+  font-size: 0.8rem;
+  color: #bbb;
+}
+
+/* === Button Actions === */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  min-width: 160px;
+}
+
+.actions button {
+  width: 100%;
+}
+
+/* === Fallback Message === */
+.empty-msg {
+  text-align: center;
+  color: #ccc;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+/* === Status Styles === */
+.status-pending {
+  border-left: 5px solid #f2994a;
+  padding-left: 15px;
+}
+
+.status-in-progress {
+  border-left: 5px solid #f2c94c;
+  padding-left: 15px;
+}
+
+.status-helped {
+  border-left: 5px solid #6fcf97;
+  padding-left: 15px;
+}
+
+/* === Responsive Fixes === */
+@media (max-width: 768px) {
+  .upload-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .upload-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .actions button {
+    width: auto;
+  }
+}

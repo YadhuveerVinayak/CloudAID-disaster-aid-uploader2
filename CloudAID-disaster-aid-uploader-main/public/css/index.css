@@ -1,0 +1,75 @@
+/* public/css/index.css */
+
+/* === Global Body Setup === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1c1c2b, #3f4c6b);
+  color: white;
+  min-height: 100vh;
+
+  /* Centering Everything */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* === Hero Container === */
+.index-hero {
+  max-width: 800px;
+  padding: 60px 20px;
+}
+
+/* === Heading === */
+.index-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #ffffff; /* Changed from yellow to white for uniformity */
+}
+
+/* === Subtext === */
+.index-hero p {
+  font-size: 1.2rem;
+  color: #dddddd; /* Soft gray for contrast */
+  margin-bottom: 40px;
+}
+
+/* === Buttons Layout === */
+.index-hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* === Individual Button Styling === */
+.index-btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.index-btn:hover {
+  background: linear-gradient(90deg, #f2c94c, #f2994a);
+  transform: translateY(-2px);
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 600px) {
+  .index-hero h1 {
+    font-size: 2rem;
+  }
+  .index-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

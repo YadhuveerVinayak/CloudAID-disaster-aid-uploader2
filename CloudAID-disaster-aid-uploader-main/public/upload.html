@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disaster Aid Upload</title>
+  <link rel="stylesheet" href="css/upload.css" />
+  <style>
+    #upload-message {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top-left Login/Signup Button -->
+  <div class="top-left">
+    <button onclick="window.location.href='/ngologin'" class="help-btn white-text">Login / Signup</button>
+  </div>
+
+  <header>
+    <h1>Disaster Aid Upload</h1>
+    <p>Share aid resources and help those in need</p>
+  </header>
+
+  <section class="container">
+    <!-- Upload Form -->
+    <section class="upload-section">
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="text" name="location" placeholder="Location" required />
+        <textarea name="description" placeholder="Describe the aid you're uploading..." required></textarea>
+        <input type="file" name="file" accept="image/*" required />
+        <button type="submit">Upload Aid</button>
+      </form>
+      <div id="upload-message"></div>
+    </section>
+
+    <!-- Past Uploads -->
+    <section class="past-aid-section">
+      <h2>Past Aid Uploads</h2>
+      <div class="image-scroll">
+        <img src="images/aid1.png" alt="Aid 1" />
+        <img src="images/aid2.jpeg" alt="Aid 2" />
+        <img src="images/aid3.jpeg" alt="Aid 3" />
+        <img src="images/aid4.jpeg" alt="Aid 4" />
+      </div>
+    </section>
+  </section>
+
+  <!-- Help Button -->
+  <div class="help-btn-container">
+    <button class="help-btn white-text" onclick="toggleHelpBox()">Need Help?</button>
+  </div>
+
+  <!-- Help Box -->
+  <div class="help-box" id="helpBox">
+    <button class="close-btn" onclick="toggleHelpBox()">✖</button>
+    <h2>Contact Details</h2>
+    <p><strong>Email:</strong> support@disasteraid.org</p>
+    <p><strong>Phone:</strong> +1-234-567-890</p>
+  </div>
+
+  <script>
+    function toggleHelpBox() {
+      document.getElementById('helpBox').classList.toggle('active');
+    }
+
+    // Upload form handler
+    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const messageDiv = document.getElementById('upload-message');
+
+      try {
+        const res = await fetch('/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          messageDiv.style.color = 'lightgreen';
+          messageDiv.textContent = ' Upload successful! Thank you for your help.';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Something went wrong.');
+        }
+      } catch (err) {
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = '❌ Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

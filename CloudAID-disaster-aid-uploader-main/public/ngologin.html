@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--  Stage 1: Meta and Title -->
+  <meta charset="UTF-8" />
+  <title>NGO/Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--  Stage 2: Link to CSS -->
+  <link rel="stylesheet" href="css/ngologin.css" />
+</head>
+<body>
+
+  <!--  Stage 3: Main Login Box Container -->
+  <div class="login-box">
+
+    <!-- Stage 4: Heading -->
+    <h2 id="login-title">NGO Login</h2>
+
+    <!-- Stage 5: Success Message (after registration) -->
+    <div id="registration-message" class="success-message" style="display: none;">
+      Registration successful! Please log in.
+    </div>
+
+    <!--  Stage 6: Login/Register Form -->
+    <form id="loginForm" action="/login" method="POST">
+
+      <!--  Stage 6.1: Fields shown only during Registration -->
+      <div class="register-fields" id="registerFields">
+        <input type="text" name="fullname" placeholder="Full Name" />
+        <input type="text" name="organization" placeholder="Organization" />
+        <input type="email" name="email" placeholder="Email Address" />
+      </div>
+
+      <!--  Stage 6.2: Common Input Fields -->
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="password" name="password" placeholder="Password" required />
+
+      <!--  Stage 6.3: Forgot Password Link -->
+      <div class="forgot-password">
+        <a href="/forgot-password">Forgot Password?</a>
+      </div>
+
+      <!--  Stage 6.4: Submit Button -->
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+
+    <!-- Stage 7: Role Switch (NGO / Admin) -->
+    <div class="switch-login">
+      Logging in as <span id="role-toggle" onclick="toggleRole()">Admin?</span>
+    </div>
+
+    <!--  Stage 8: Registration Toggle -->
+    <div class="register-toggle">
+      New NGO? <span onclick="toggleRegister()">Register here</span>
+    </div>
+
+    <!--  Stage 9: Note -->
+    <div class="note">Only verified NGO personnel and admins are authorized</div>
+  </div>
+
+  <!--  Stage 10: JavaScript Logic -->
+  <script>
+    let currentRole = 'NGO';
+    let isRegistering = false;
+
+    const title = document.getElementById('login-title');
+    const toggleText = document.getElementById('role-toggle');
+    const registerFields = document.getElementById('registerFields');
+    const submitBtn = document.getElementById('submitBtn');
+    const form = document.getElementById('loginForm');
+    const registrationMsg = document.getElementById('registration-message');
+
+    // Toggle Role
+    function toggleRole() {
+      currentRole = currentRole === 'NGO' ? 'Admin' : 'NGO';
+      title.innerText = isRegistering ? 'NGO Registration' : `${currentRole} Login`;
+      toggleText.innerText = currentRole === 'NGO' ? 'Admin?' : 'NGO?';
+    }
+
+    // Toggle Register/Login
+    function toggleRegister() {
+      isRegistering = !isRegistering;
+
+      if (isRegistering) {
+        registerFields.classList.add('show');
+        title.innerText = 'NGO Registration';
+        submitBtn.innerText = 'Register';
+        form.action = '/register';
+      } else {
+        registerFields.classList.remove('show');
+        title.innerText = currentRole === 'Admin' ? 'Admin Login' : 'NGO Login';
+        submitBtn.innerText = 'Login';
+        form.action = '/login';
+      }
+    }
+
+    //  Handle redirect message
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('registered') === 'success') {
+      registrationMsg.style.display = 'block';
+    }
+
+    //  Handle Registration Form Submission
+    form.addEventListener('submit', async function (e) {
+      if (!isRegistering) return;
+
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Registered successfully! You can now login.");
+        toggleRegister();
+        form.reset();
+      } else {
+        alert("❌ " + result.message);
+      }
+    });
+  </script>
+
+</body>
+</html>

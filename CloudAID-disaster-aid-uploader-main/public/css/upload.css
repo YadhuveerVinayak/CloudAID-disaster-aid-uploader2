@@ -1,0 +1,154 @@
+/* Stage 1: Global Page Styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1c1c2b, #3f4c6b);
+  color: white;
+}
+
+/* Stage 2: Header Section */
+header {
+  text-align: center;
+  margin: 40px 20px 20px;
+}
+
+/* Stage 3: Main Flex Container */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 30px;
+}
+
+/* Stage 4: Upload and Past Aid Card Containers */
+.upload-section,
+.past-aid-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 400px;
+  max-width: 100%;
+}
+
+/* Stage 5: Upload Form Layout */
+.upload-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Stage 6: Input Fields */
+.upload-section input,
+.upload-section textarea {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  resize: vertical;
+}
+
+/* Stage 7: File Input Styling */
+.upload-section input[type="file"] {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+}
+
+/* Stage 8: Upload Button */
+.upload-section button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.upload-section button:hover {
+  background: linear-gradient(90deg, #f2c94c, #f2994a);
+}
+
+/* Stage 9: Past Uploads Section Title */
+.past-aid-section h2 {
+  color: #f2c94c;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Stage 10: Horizontal Scroll Image Layout */
+.image-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.image-scroll img {
+  width: 150px;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Stage 11: Help Button Position */
+.help-btn-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Stage 12: Help Button Design */
+.help-btn {
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.help-btn.white-text {
+  color: white;
+}
+
+/* Stage 13: Help Box Hidden Initially */
+.help-box {
+  position: fixed;
+  bottom: -300px;
+  right: 20px;
+  width: 260px;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  transition: bottom 0.4s ease;
+}
+
+/* Stage 14: Help Box Active (Visible State) */
+.help-box.active {
+  bottom: 20px;
+}
+
+/* Stage 15: Close Button for Help Box */
+.close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  float: right;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Stage 16: Top-Left Corner Login Button */
+.top-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}

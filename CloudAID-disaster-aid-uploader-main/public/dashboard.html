@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Disaster Aid Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- === Stage 1: Top Bar with Profile & Logout === -->
+  <div style="text-align:right; padding: 15px;">
+    <a href="/ngo-profile" style="color:#f2c94c; text-decoration: none; margin-right: 15px;">👤 View Profile</a>
+    <a href="/logout" style="color:white; text-decoration:none; font-weight:bold; background: #f2994a; padding: 10px 15px; border-radius: 8px;">Logout</a>
+  </div>
+
+  <!-- === Stage 2: Header Section === -->
+  <header>
+    <h1>Disaster Aid Uploads</h1>
+    <p>Real-time list of submitted aid requests</p>
+  </header>
+
+  <!-- === Stage 3: Filter Dropdown === -->
+  <div style="text-align:center; margin-top: 20px;">
+    <label for="statusFilter" style="margin-right: 10px;">Filter by Status:</label>
+    <select id="statusFilter" onchange="filterUploads()" style="padding: 8px; border-radius: 6px;">
+      <option value="all">All</option>
+      <option value="pending">Pending</option>
+      <option value="in-progress">In Progress</option>
+      <option value="helped">Helped</option>
+    </select>
+  </div>
+
+  <!-- === Stage 4: Dashboard Section === -->
+  <main class="main-container">
+    <div class="container">
+      <div class="dashboard-container">
+        <h3 class="section-heading">All Uploads</h3>
+        <div id="upload-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- === Stage 5: JavaScript Logic === -->
+  <script>
+    let uploadsData = [];
+
+    async function fetchUploads() {
+      try {
+        const res = await fetch('/api/uploads');
+        uploadsData = await res.json();
+        renderUploads(uploadsData);
+      } catch (err) {
+        console.error('Failed to load uploads:', err);
+        document.getElementById('upload-list').innerHTML = "<p class='empty-msg'>Error loading uploads.</p>";
+      }
+    }
+
+    function filterUploads() {
+      const selected = document.getElementById('statusFilter').value;
+      const filtered = selected === 'all' ? uploadsData : uploadsData.filter(u => u.status === selected);
+      renderUploads(filtered);
+    }
+
+    function renderUploads(data) {
+      const list = document.getElementById('upload-list');
+      if (!data.length) {
+        list.innerHTML = "<p class='empty-msg'>No uploads found for selected status.</p>";
+        return;
+      }
+
+      const order = { "pending": 0, "in-progress": 1, "helped": 2 };
+      data.sort((a, b) => order[a.status] - order[b.status]);
+
+      list.innerHTML = data.map(upload => {
+        const statusClass = `status-${upload.status}`;
+        return `
+          <div class="upload-card ${statusClass}">
+            <img src="${upload.imageUrl}" alt="Aid Image" />
+            <div class="upload-details">
+              <h3>${upload.name}</h3>
+              <p><strong>📍 Location:</strong> ${upload.location}</p>
+              <p><strong>📝 Description:</strong> ${upload.description}</p>
+              ${upload.helpedBy ? `<p><strong>🤝 Taken by:</strong> ${upload.helpedBy}</p>` : ''}
+              <p class="timestamp">${new Date(upload.timestamp).toLocaleString()}</p>
+            </div>
+            <div class="actions">
+              ${upload.status === 'pending' ? `
+                <button class="styled-btn" onclick="takeOver('${upload.id}')">🛠️ Take Over</button>` : ''}
+              ${upload.status === 'in-progress' ? `
+                <button class="styled-btn" onclick="markHelped('${upload.id}')">✅ Mark Helped</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function takeOver(id) {
+      const ngoName = prompt("Enter your NGO name to take over this aid post:");
+      if (!ngoName) return;
+
+      await fetch(`/api/uploads/${id}/claim`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ngoName })
+      });
+
+      fetchUploads();
+    }
+
+    async function markHelped(id) {
+      await fetch(`/api/uploads/${id}/helped`, { method: 'POST' });
+      fetchUploads();
+    }
+
+    fetchUploads();
+  </script>
+</body>
+</html>
